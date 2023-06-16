@@ -38,4 +38,37 @@ public class StudentController {
         return "student deleted";
     }
 
+//    update the course of student
+    @PutMapping("/update")
+    public Student changeCourse(@RequestParam("id") int admissionNo,@RequestParam("course") String course){
+        if(studentdb.containsKey(admissionNo)){
+            Student s = studentdb.get(admissionNo);
+
+            s.setCourse(course);
+
+            studentdb.put(admissionNo,s);
+
+            return studentdb.get(admissionNo);
+        }
+        else{
+            return null;
+        }
+    }
+
+
+//    find all the student whose age is greater than 25
+    @GetMapping("/getTotal")
+    public int getTotalStudent(){
+        int count=0;
+//        traverse on our Db
+        for(int key : studentdb.keySet()){
+            Student s = studentdb.get(key);
+            if(s.getAge() > 25){
+                count++;
+            }
+        }
+
+        return count;
+    }
+
 }
